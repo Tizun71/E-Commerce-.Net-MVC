@@ -16,4 +16,8 @@
     <ProjectReference Include="..\SV21T1020323.DomainModels\SV21T1020323.DomainModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Themes\" />
+  </ItemGroup>
+
 </Project>
