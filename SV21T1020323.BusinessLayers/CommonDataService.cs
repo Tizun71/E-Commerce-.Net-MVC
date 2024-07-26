@@ -3,12 +3,16 @@ using SV21T1020323.DomainModels;
 
 namespace SV21T1020323.BusinessLayers
 {
+    /// <summary>
+    /// Connect database and fetch data
+    /// </summary>
     public static class CommonDataService
     {
         private static readonly CustomerDAL customerDB;
         private static readonly CategoriesDAL categoriesDB;
         private static readonly SuppliersDAL suppliersDB;
         private static readonly ShippersDAL shippersDB;
+        private static readonly EmployeesDAL employeesDB;
 
         static CommonDataService()
         {
@@ -21,6 +25,7 @@ namespace SV21T1020323.BusinessLayers
             categoriesDB = new CategoriesDAL(connectionString);
             suppliersDB = new SuppliersDAL(connectionString);
             shippersDB = new ShippersDAL(connectionString);
+            employeesDB = new EmployeesDAL(connectionString);
         }
 
         public static List<Customer> ListOfCustomers()
@@ -41,6 +46,11 @@ namespace SV21T1020323.BusinessLayers
         public static List<Shippers> ListOfShippers()
         {
             return shippersDB.List();
+        }
+
+        public static List<Employees> ListOfEmployees()
+        {
+            return employeesDB.List();
         }
     }
 }

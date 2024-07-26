@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     //Layout = null;
     ViewBag.Title = "Quản lý khách hàng";
 }
@@ -10,11 +9,11 @@
         <form id="formSearch" action="~/Customer" method="get">
             <div class="input-group">
 
-                <input  name="searchValue" 
-                        type="text" 
-                        class="form-control" 
-                        placeholder="Nhập tên khách hàng cần tìm"
-                        autofocus/>
+                <input name="searchValue"
+                       type="text"
+                       class="form-control"
+                       placeholder="Nhập tên khách hàng cần tìm"
+                       autofocus />
 
                 <div class="input-group-btn">
                     <button class="btn btn-info" type="submit">
@@ -22,7 +21,7 @@
                     </button>
 
                     <a href="~/Customer/Create" class="btn btn-primary" style="margin-left:5px">
-                        <i class="fa fa-plus"></i> Bổ sung    
+                        <i class="fa fa-plus"></i> Bổ sung
                     </a>
                 </div>
             </div>
@@ -30,7 +29,7 @@
 
         <!--Hiển thị dữ liệu-->
         <p style="margin-top:10px">
-            có <strong>100</strong>
+            có <strong>100</strong> khách hàng
         </p>
         <div class="table-responsive">
             <table class="table table-bodered table-hover table-striped">
@@ -52,7 +51,7 @@
                     {
                         <tr>
                             <td>Tiến Dũng</td>
-                            <td>Tizun</td>
+                            <td>GD023</td>
                             <td>0123456789</td>
                             <td>tzdz@gmail.com</td>
                             <td>Chi lang</td>

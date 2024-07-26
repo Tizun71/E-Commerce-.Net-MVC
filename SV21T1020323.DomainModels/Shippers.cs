@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SV21T1020323.DomainModels
 {
+    /// <summary>
+    /// Shipper Data
+    /// </summary>
     public class Shippers
     {
         public int ShipperId { get; set; }

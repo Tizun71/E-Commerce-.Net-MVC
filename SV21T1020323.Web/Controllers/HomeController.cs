@@ -49,5 +49,16 @@ namespace SV21T1020323.Web.Controllers
             var model = BusinessLayers.CommonDataService.ListOfShippers();
             return View(model);
         }
+
+        public IActionResult Employees() 
+        {
+            var model = BusinessLayers.CommonDataService.ListOfEmployees();
+            return View(model);
+        }
+        public IActionResult Products()
+        {
+            var model = BusinessLayers.CommonDataService.ListOfEmployees();
+            return View(model);
+        }
     }
 }

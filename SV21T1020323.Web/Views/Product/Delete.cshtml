@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Xóa sản phẩm";
+}
+<div class="box box-danger">
+    <div class="box-body">
+        <form action="~/Category/Delete" method="post">
+
+            <div class="form-group">
+                <label >Tên mặt hàng:</label>
+                <p class="form-control-static">Xe tập đi xanh dương</p>
+
+            </div>
+
+            <div class="form-group">
+                <label >Mô tả:</label>
+                <p class="form-control-static">Xe tập đi gắn chip</p>
+            </div>
+
+            <div class="form-group">
+                <label >Loại hàng:</label>
+                <p class="form-control-static">Gia dụng</p>
+            </div>
+
+            <div class="form-group">
+                <label >Nhà cung cấp:</label>
+                <p class="form-control-static">TNHH BabyShop</p>
+            </div>
+
+            <div class="form-group">
+                <label >Đơn vị tính:</label>
+                <p class="form-control-static">cái</p>
+            </div>
+
+            <div class="form-group">
+                <label >Giá hàng:</label>
+                <p class="form-control-static">1.000.000</p>
+            </div>
+
+            <div class="form-group">
+                <label >Trạng thái bán</label>
+                <p class="form-control-static">Hiện đang được bán</p>
+            </div>
+
+            <div class="form-group">
+                <label >Ảnh minh họa:</label>
+                <img class="profile-user-img img-responsive img-bordered" src="https://cdn1.concung.com/2022/06/47733-89620-large_mobile/xe-tap-di-nhua-hinh-tho-aubw03-xanh-duong.jpg">
+            </div>
+
+
+            <div class="form-group text-right">
+                <button type="submit" class="btn btn-primary btn-danger">
+                    <i class="fa fa-floopy-o"></i>
+                    Xóa dữ liệu
+                </button>
+                <a href="~/Product" class="btn btn-default">
+                    Quay lại
+                </a>
+            </div>
+
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+</div>
