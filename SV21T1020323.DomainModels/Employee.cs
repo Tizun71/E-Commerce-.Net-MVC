@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 namespace SV21T1020323.DomainModels
 {
     /// <summary>
-    /// Employee Data
+    /// Thông tin nhân viên
     /// </summary>
-    public class Employees
+    public class Employee
     {
-        public int EmployeeId { get; set; }
+        public int EmployeeID { get; set; }
         public string FullName { get; set; } = string.Empty;
-        public DateTime Birthday { get; set; }
+        public DateTime BirthDate { get; set; }
         public string Address { get; set; } = string.Empty;
         public string Phone { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string Photo { get; set; } = string.Empty;
-        public bool isWorking { get; set; } = false;
+        public bool IsWorking { get; set; } = true;
     }
 }

@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<SV21T1020323.DomainModels.Supplier>
 @{
     //Layout = null
     ViewBag.Title = "Quản lý nhà cung cấp";
@@ -30,7 +30,7 @@
 
         <!--Hiển thị dữ liệu-->
         <p style="margin-top:10px">
-            có <strong>100</strong> nhà cung cấp
+            có <strong>@ViewBag.RowCount</strong> nhà cung cấp trong tổng số <strong>@ViewBag.PageCount</strong> trang
         </p>
         <div class="table-responsive">
             <table class="table table-bodered table-hover table-striped">
@@ -47,20 +47,20 @@
                 </thead>
 
                 <tbody>
-                    @for (int i = 1; i <= 10; i++)
+                    @foreach (var item in Model)
                     {
                         <tr>
-                            <td>Công ty cổ phần GAMZ</td>
-                            <td>GAMZ</td>
-                            <td>Thừa Thiên Huế</td>
-                            <td>77 Nguyễn Huệ</td>
-                            <td>0914172116</td>
-                            <td>office@gamz.vn</td>
+                            <td>@item.SupplierName</td>
+                            <td>@item.ContactName</td>
+                            <td>@item.Province</td>
+                            <td>@item.Address</td>
+                            <td>@item.Phone</td>
+                            <td>@item.Email</td>
                             <td class="text-right">
-                                <a href="~/Supplier/Edit/123" class="btn btn-xs btn-info">
+                                <a href="~/Supplier/Edit/@item.SupplierID" class="btn btn-xs btn-info">
                                     <i class="fa fa-edit"></i>
                                 </a>
-                                <a href="~/Supplier/Delete/123" class="btn btn-xs btn-danger">
+                                <a href="~/Supplier/Delete/@item.SupplierID" class="btn btn-xs btn-danger">
                                     <i class="fa fa-remove"></i>
                                 </a>
                             </td>
@@ -73,11 +73,17 @@
 
         <div class="text-center">
             <ul class="pagination">
-                <li><a href="#">1</a></li>
-                <li class="active"><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
+                @for (int p = 1; p <= ViewBag.PageCount; p++)
+                {
+                    if (p == ViewBag.Page)
+                    {
+                        <li class="active"><a href="#">@p</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="~/Supplier?page=@p&searchValue=@ViewBag.SearchValue">@p</a></li>
+                    }
+                }
             </ul>
         </div>
 

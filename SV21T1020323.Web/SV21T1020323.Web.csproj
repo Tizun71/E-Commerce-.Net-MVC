@@ -6090,4 +6090,8 @@
     <None Include="wwwroot\Themes\bower_components\select2\src\scss\_single.scss" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\assets\img\EmployeePhoto\" />
+  </ItemGroup>
+
 </Project>

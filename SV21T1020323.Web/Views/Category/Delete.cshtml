@@ -1,31 +1,40 @@
-﻿@{
-    ViewBag.Title = "Xóa loại hàng";
+﻿@model Category
+
+@{
+    ViewBag.Title = "Xóa Loại hàng";
 }
 <div class="box box-danger">
     <div class="box-body">
-        <form action="~/Category/Delete" method="post">
+        <form action="~/Category/Delete/@Model.CategoryID" method="post">
 
             <div class="form-group">
                 <label>Tên loại hàng</label>
-                <p class="form-control-static">Ô tô</p>
+                <p class="form-control-static">@Model.CategoryName</p>
             </div>
 
             <div class="form-group">
                 <label>Mô tả</label>
-                <p class="form-control-static">Ô tô nhập khẩu từ Tây Ban Nha</p>
+                <p class="form-control-static">@Model.Description</p>
             </div>
 
             <div class="form-group text-right">
-                <button type="submit" class="btn btn-primary btn-danger">
-                    <i class="fa fa-floopy-o"></i>
-                    Xóa dữ liệu
-                </button>
+                @if (ViewBag.AllowDelete)
+                {
+                    <button type="submit" class="btn btn-primary btn-danger">
+                        <i class="fa fa-floopy-o"></i>
+                        Xóa dữ liệu
+                    </button>
+                }
+                else
+                {
+                    <span style="color:#f00">Không được phép xóa loại hàng này!</span>
+                }
+
                 <a href="~/Category" class="btn btn-default">
                     Quay lại
                 </a>
             </div>
 
-            <button type="submit" class="btn btn-default">Submit</button>
         </form>
     </div>
 </div>

@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<SV21T1020323.DomainModels.Customer>
+
+@{
     //Layout = null;
     ViewBag.Title = "Quản lý khách hàng";
 }
@@ -9,10 +11,12 @@
         <form id="formSearch" action="~/Customer" method="get">
             <div class="input-group">
 
-                <input name="searchValue"
+                <input id="searchInput" 
+                       name="searchValue"
                        type="text"
                        class="form-control"
                        placeholder="Nhập tên khách hàng cần tìm"
+                       value="@ViewBag.SearchValue"
                        autofocus />
 
                 <div class="input-group-btn">
@@ -29,14 +33,14 @@
 
         <!--Hiển thị dữ liệu-->
         <p style="margin-top:10px">
-            có <strong>100</strong> khách hàng
+            có <strong>@ViewBag.RowCount</strong> khách hàng trong tổng số <strong>@ViewBag.PageCount</strong> trang
         </p>
         <div class="table-responsive">
             <table class="table table-bodered table-hover table-striped">
                 <thead>
                     <tr class="bg-primary">
                         <th>Tên khách hàng</th>
-                        <th>Tên giao dịch</th>
+                        <th>Tên liên hệ</th>
                         <th>Điện thoại</th>
                         <th>Email</th>
                         <th>Địa chỉ</th>
@@ -47,23 +51,23 @@
                 </thead>
 
                 <tbody>
-                    @for (int i = 1; i <= 10; i++)
+                    @foreach (var item in Model)
                     {
                         <tr>
-                            <td>Tiến Dũng</td>
-                            <td>GD023</td>
-                            <td>0123456789</td>
-                            <td>tzdz@gmail.com</td>
-                            <td>Chi lang</td>
-                            <td>Hue</td>
-                            <td>
-                                <input type="radio">
+                            <td>@item.CustomerName</td>
+                            <td>@item.ContactName</td>
+                            <td>@item.Phone</td>
+                            <td>@item.Email</td>
+                            <td>@item.Address</td>
+                            <td>@item.Province</td>
+                            <td class="form-check">
+                                <input class="form-check-input" type="radio" value="@item.IsLocked" @(!item.IsLocked ? "" : "checked") onmouseover="this.disabled=true" onmouseout="this.disabled=false">
                             </td>
                             <td class="text-right">
-                                <a href="~/Customer/Edit/123" class="btn btn-xs btn-info">
+                                <a href="~/Customer/Edit/@item.CustomerID" class="btn btn-xs btn-info">
                                     <i class="fa fa-edit"></i>
                                 </a>
-                                <a href="~/Customer/Delete/123" class="btn btn-xs btn-danger">
+                                <a href="~/Customer/Delete/@item.CustomerID" class="btn btn-xs btn-danger">
                                     <i class="fa fa-remove"></i>
                                 </a>
                             </td>
@@ -76,12 +80,20 @@
 
         <div class="text-center">
             <ul class="pagination">
-                <li><a href="#">1</a></li>
-                <li class="active"><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
+                @for (int p = 1; p <= ViewBag.PageCount; p++)
+                {
+                    if (p == ViewBag.Page)
+                    {
+                        <li class="active"><a href="#">@p</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="~/Customer?page=@p&searchValue=@ViewBag.SearchValue">@p</a></li>
+                    }
+                }
             </ul>
         </div>
     </div>
 </div>
+
+<script src="./js/DebounceInput.js"/>

@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<SV21T1020323.DomainModels.Shipper>
 @{
     //Layout = null
     ViewBag.Title = "Quản lý người giao hàng";
@@ -30,7 +30,7 @@
 
         <!--Hiển thị dữ liệu-->
         <p style="margin-top:10px">
-            có <strong>100</strong> hãng giao hàng
+            có <strong>@ViewBag.RowCount</strong> hãng giao hàng trong tổng số <strong>@ViewBag.PageCount</strong> trang
         </p>
         <div class="table-responsive">
             <table class="table table-bodered table-hover table-striped">
@@ -43,16 +43,16 @@
                 </thead>
 
                 <tbody>
-                    @for (int i = 1; i <= 10; i++)
+                    @foreach (var item in Model)
                     {
                         <tr>
-                            <td>Giao hàng tiết kiệm</td>
-                            <td>0838292212</td>
+                            <td>@item.ShipperName</td>
+                            <td>@item.Phone</td>
                             <td class="text-right">
-                                <a href="~/Shipper/Edit/123" class="btn btn-xs btn-info">
+                                <a href="~/Shipper/Edit/@item.ShipperID" class="btn btn-xs btn-info">
                                     <i class="fa fa-edit"></i>
                                 </a>
-                                <a href="~/Shipper/Delete/123" class="btn btn-xs btn-danger">
+                                <a href="~/Shipper/Delete/@item.ShipperID" class="btn btn-xs btn-danger">
                                     <i class="fa fa-remove"></i>
                                 </a>
                             </td>
@@ -65,11 +65,17 @@
 
         <div class="text-center">
             <ul class="pagination">
-                <li><a href="#">1</a></li>
-                <li class="active"><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
+                @for (int p = 1; p <= ViewBag.PageCount; p++)
+                {
+                    if (p == ViewBag.Page)
+                    {
+                        <li class="active"><a href="#">@p</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="~/Shipper?page=@p&searchValue=@ViewBag.SearchValue">@p</a></li>
+                    }
+                }
             </ul>
         </div>
 
