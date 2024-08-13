@@ -10,11 +10,13 @@
             <div class="form-group">
                 <label>Tên khách hàng</label>
                 <input type="text" class="form-control" name="@nameof(Model.CustomerName)" value="@Model.CustomerName" autofocus>
+                @Html.ValidationMessage(nameof(Model.CustomerName))
             </div>
 
             <div class="form-group">
                 <label>Tên giao dịch</label>
                 <input type="text" class="form-control" name="@nameof(Model.ContactName)" value="@Model.ContactName">
+                @Html.ValidationMessage(nameof(Model.ContactName))
             </div>
 
             <div class="form-group">
@@ -50,6 +52,7 @@
                         }
                     }
                 </select>
+                @Html.ValidationMessageFor(m => m.Province)
             </div>
 
             <div class="form-group">

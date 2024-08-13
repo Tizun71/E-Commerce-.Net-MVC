@@ -13,18 +13,16 @@ namespace SV21T1020323.Web.Controllers
             int rowCount = 0;
             var data = CommonDataService.ListOfCustomers(out rowCount, page, PAGE_SIZE, searchValue ?? "");
 
-            int pageCount = 1;
-            pageCount = rowCount / PAGE_SIZE;
+            Models.CustomerSearchResult model = new Models.CustomerSearchResult()
+            {
+                Page = page,
+                PageSize = PAGE_SIZE,
+                SearchValue = searchValue ?? "",
+                RowCount = rowCount,
+                Data = data
+            };
 
-            if (rowCount % PAGE_SIZE > 0)
-                pageCount += 1;
-
-            ViewBag.Page = page;
-            ViewBag.PageCount = pageCount;
-            ViewBag.RowCount = rowCount;
-            ViewBag.SearchValue = searchValue;
-
-            return View(data);
+            return View(model);
         }
 
         public IActionResult Create()
@@ -52,7 +50,31 @@ namespace SV21T1020323.Web.Controllers
         [HttpPost]
         public IActionResult Save(Customer? data)
         {
-            //TODO: Kiểm tra dữ liệu đầu vào có hợp lệ hay không
+            ViewBag.Title = data.CustomerID == 0 ? "Bổ sung khách hàng" : "Cập nhật thông tin khách hàng";
+
+            if (string.IsNullOrWhiteSpace(data.CustomerName))
+            {
+                ModelState.AddModelError(nameof(data.CustomerName), "Tên khách hàng không được để trống");
+            }
+            if (string.IsNullOrWhiteSpace(data.ContactName))
+            {
+                ModelState.AddModelError(nameof(data.ContactName), "Tên giao dịch không được để trống");
+            }
+            if (string.IsNullOrWhiteSpace(data.Province))
+            {
+                ModelState.AddModelError(nameof(data.Province), "Vui lòng chọn tỉnh/thành");
+            }
+
+            data.Phone = data.Phone ?? "";
+            data.Email = data.Email ?? "";
+            data.Address = data.Address ?? "";
+
+            if (!ModelState.IsValid)
+            {
+                return View("Edit", data);
+            }
+
+            //Gọi chức năng xử lý dưới tầng tác nghiệp nếu quá trình kiểm soát lỗi không phát hiện lỗi đầu vào
             if (data.CustomerID == 0)
             {
                 CommonDataService.AddCustomer(data);

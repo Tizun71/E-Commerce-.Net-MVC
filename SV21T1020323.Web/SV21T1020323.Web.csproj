@@ -6091,7 +6091,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\assets\img\EmployeePhoto\" />
+    <Folder Include="wwwroot\uploads\Employees\" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SV21T1020323.DomainModels.Customer>
+﻿@model SV21T1020323.Web.Models.CustomerSearchResult 
 
 @{
     //Layout = null;
@@ -16,7 +16,7 @@
                        type="text"
                        class="form-control"
                        placeholder="Nhập tên khách hàng cần tìm"
-                       value="@ViewBag.SearchValue"
+                       value="@Model.SearchValue"
                        autofocus />
 
                 <div class="input-group-btn">
@@ -33,7 +33,7 @@
 
         <!--Hiển thị dữ liệu-->
         <p style="margin-top:10px">
-            có <strong>@ViewBag.RowCount</strong> khách hàng trong tổng số <strong>@ViewBag.PageCount</strong> trang
+            có <strong>@Model.RowCount</strong> khách hàng trong tổng số <strong>@Model.PageCount</strong> trang
         </p>
         <div class="table-responsive">
             <table class="table table-bodered table-hover table-striped">
@@ -51,7 +51,7 @@
                 </thead>
 
                 <tbody>
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.Data)
                     {
                         <tr>
                             <td>@item.CustomerName</td>
@@ -80,15 +80,15 @@
 
         <div class="text-center">
             <ul class="pagination">
-                @for (int p = 1; p <= ViewBag.PageCount; p++)
+                @for (int p = 1; p <= Model.PageCount; p++)
                 {
-                    if (p == ViewBag.Page)
+                    if (p == Model.Page)
                     {
                         <li class="active"><a href="#">@p</a></li>
                     }
                     else
                     {
-                        <li><a href="~/Customer?page=@p&searchValue=@ViewBag.SearchValue">@p</a></li>
+                        <li><a href="~/Customer?page=@p&searchValue=@Model.SearchValue">@p</a></li>
                     }
                 }
             </ul>

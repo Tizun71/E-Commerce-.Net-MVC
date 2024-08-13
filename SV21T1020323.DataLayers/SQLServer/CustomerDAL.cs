@@ -128,6 +128,7 @@ namespace SV21T1020323.DataLayers.SQLServer
                 };
 
                 data = connection.Query<Customer>(sql: sql, param: parameters, commandType: CommandType.Text).ToList();
+                connection.Close();
             }
             return data;
         }
