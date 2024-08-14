@@ -1,44 +1,45 @@
-﻿@{
+﻿@model Product
+@{
     ViewBag.Title = "Xóa sản phẩm";
 }
 <div class="box box-danger">
     <div class="box-body">
-        <form action="~/Category/Delete" method="post">
+        <form action="~/Product/Delete/@Model.ProductID" method="post">
 
             <div class="form-group">
                 <label >Tên mặt hàng:</label>
-                <p class="form-control-static">Xe tập đi xanh dương</p>
+                <p class="form-control-static">@Model.ProductName</p>
 
             </div>
 
             <div class="form-group">
                 <label >Mô tả:</label>
-                <p class="form-control-static">Xe tập đi gắn chip</p>
+                <p class="form-control-static">@Model.ProductDescription</p>
             </div>
 
             <div class="form-group">
                 <label >Loại hàng:</label>
-                <p class="form-control-static">Gia dụng</p>
+                <p class="form-control-static">@CommonDataService.GetCategory(Model.CategoryID)</p>
             </div>
 
             <div class="form-group">
                 <label >Nhà cung cấp:</label>
-                <p class="form-control-static">TNHH BabyShop</p>
+                <p class="form-control-static">@CommonDataService.GetSupplier(Model.SupplierID)</p>
             </div>
 
             <div class="form-group">
                 <label >Đơn vị tính:</label>
-                <p class="form-control-static">cái</p>
+                <p class="form-control-static">@Model.Unit</p>
             </div>
 
             <div class="form-group">
                 <label >Giá hàng:</label>
-                <p class="form-control-static">1.000.000</p>
+                <p class="form-control-static">@Model.Price</p>
             </div>
 
             <div class="form-group">
                 <label >Trạng thái bán</label>
-                <p class="form-control-static">Hiện đang được bán</p>
+                <p class="form-control-static">@Model.IsSelling ? "Hiện đang được bán" : "Hiện đang không được bán"</p>
             </div>
 
             <div class="form-group">
@@ -48,16 +49,23 @@
 
 
             <div class="form-group text-right">
-                <button type="submit" class="btn btn-primary btn-danger">
-                    <i class="fa fa-floopy-o"></i>
-                    Xóa dữ liệu
-                </button>
+                @if (ViewBag.AllowDelete)
+                {
+                    <button type="submit" class="btn btn-primary btn-danger">
+                        <i class="fa fa-floopy-o"></i>
+                        Xóa dữ liệu
+                    </button>
+                }
+                else
+                {
+                    <span style="color:#f00">Không được phép xóa sản phẩm này!</span>
+                }
+
                 <a href="~/Product" class="btn btn-default">
                     Quay lại
                 </a>
             </div>
 
-            <button type="submit" class="btn btn-default">Submit</button>
         </form>
     </div>
 </div>

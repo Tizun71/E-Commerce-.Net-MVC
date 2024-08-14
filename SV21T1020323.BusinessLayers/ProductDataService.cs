@@ -133,6 +133,10 @@ namespace SV21T1020323.BusinessLayers
         {
             return productDB.ListAttributes(productID).ToList();
         }
+        public static ProductAttribute? GetAttribute(long attributeID)
+        {
+            return productDB.GetAttribute(attributeID);
+        }
 
         public static long AddAttribute(ProductAttribute data)
         {

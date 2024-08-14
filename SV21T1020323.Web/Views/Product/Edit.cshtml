@@ -17,11 +17,11 @@
 
     <div class="box-body">
         <form class="form-horizontal" action="~/Product/Save" method="post" enctype="multipart/form-data">
-
+            <input type="hidden" name="@nameof(Model.ProductID)" value="@Model.ProductID" />
             <div class="form-group">
                 <label class="control-label col-sm-2">Tên mặt hàng:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" autofocus name="@Model.ProductName" value="@Model.ProductName">
+                    <input type="text" class="form-control" autofocus name="@nameof(Model.ProductName)" value="@Model.ProductName">
                     @Html.ValidationMessage(nameof(Model.ProductName))
                 </div>
             </div>
@@ -29,14 +29,14 @@
             <div class="form-group">
                 <label class="control-label col-sm-2">Mô tả:</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" rows="3" name="@Model.ProductDescription">@Model.ProductDescription</textarea>
+                    <textarea class="form-control" rows="3" name="@nameof(Model.ProductDescription)">@Model.ProductDescription</textarea>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-sm-2">Loại hàng:</label>
                 <div class="col-sm-10">
-                    <select class="form-control" name="CategoryId">
+                    <select class="form-control" name="@nameof(Model.CategoryID)">
                         <option value="0">-- Loại hàng --</option>
                         @foreach (var category in CommonDataService.ListOfCategories())
                         {
@@ -57,8 +57,8 @@
             <div class="form-group">
                 <label class="control-label col-sm-2">Nhà cung cấp:</label>
                 <div class="col-sm-10">
-                    <select class="form-control" name="SupplierID">
-                        <option>-- Nhà cung cấp --</option>
+                    <select class="form-control" name="@nameof(Model.SupplierID)">
+                        <option value="0">-- Nhà cung cấp --</option>
                         @foreach (var supplier in CommonDataService.ListOfSuppliers())
                         {
                             if (supplier.SupplierID == Model.SupplierID)
@@ -71,13 +71,15 @@
                             }
                         }
                     </select>
+                    @Html.ValidationMessage(nameof(Model.SupplierID))
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-sm-2">Đơn vị tính:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="@nameof(Model.Unit) value="@nameof(Model.Unit)">
+                    <input type="text" class="form-control" name="@nameof(Model.Unit)" value="@Model.Unit">
+
                     @Html.ValidationMessage(nameof(Model.Unit))
                 </div>
             </div>
@@ -85,7 +87,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-2">Giá hàng:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="@nameof(Model.Price) value="@nameof(Model.Price)">
+                    <input type="text" class="form-control" name="@nameof(Model.Price)" value="@Model.Price">
                     @Html.ValidationMessage(nameof(Model.Price))
                 </div>
             </div>
@@ -148,29 +150,29 @@
                     <th>Thứ tự hiển thị</th>
                     <th>Ẩn ảnh</th>
                     <th class="text-right">
-                        <a class="btn btn-xs btn-primary" href="~/Product/Photo/123?method=add">
+                        <a class="btn btn-xs btn-primary" href="~/Product/Photo/@Model.ProductID?method=add">
                             <i class="fa fa-plus"></i>
                         </a>
                     </th>
                 </tr>
             </thead>
             <tbody>
-                @for (int i = 1; i <= 3; i++)
+                @foreach (var photo in ProductDataService.ListPhotos(Model.ProductID))
                 {
                     <tr>
                         <td style="vertical-align:middle">
                             <img src="~/assets/img/macbook.jpg" alt="MacBookPro" style="width:100px" />
                         </td>
                         <td style="vertical-align:middle;">
-                            MacBook Pro M2 15" - 2023
+                            @photo.Description
                         </td>
-                        <td style="vertical-align:middle;">@i</td>
+                        <td style="vertical-align:middle;">@photo.DisplayOrder</td>
                         <td style="vertical-align:middle;"></td>
                         <td style="vertical-align:middle; text-align:right">
-                            <a class="btn btn-xs btn-primary" href="~/Product/Photo/123?method=edit&photoId=456">
+                            <a class="btn btn-xs btn-primary" href="~/Product/Photo/@photo.ProductID?method=edit&photoId=@photo.PhotoID">
                                 <i class="fa fa-edit"></i>
                             </a>
-                            <a class="btn btn-xs btn-danger" href="~/Product/Photo/123?method=delete&photoId=456" onclick="return confirm('Xóa ảnh của mặt hàng hay không?')">
+                            <a class="btn btn-xs btn-danger" href="~/Product/Photo/@photo.ProductID?method=delete&photoId=@photo.PhotoID" onclick="return confirm('Xóa ảnh của mặt hàng hay không?')">
                                 <i class="fa fa-remove"></i>
                             </a>
                         </td>
@@ -201,24 +203,24 @@
                     <th>Giá trị thuộc tính</th>
                     <th>Thứ tự hiển thị</th>
                     <th class="text-right">
-                        <a class="btn btn-xs btn-primary" href="~/Product/Attribute/123?method=add">
+                        <a class="btn btn-xs btn-primary" href="~/Product/Attribute/@Model.ProductID?method=add">
                             <i class="fa fa-plus"></i>
                         </a>
                     </th>
                 </tr>
             </thead>
             <tbody>
-                @for (int i = 1; i <= 5; i++)
+                @foreach (var attr in ProductDataService.ListAttributes(Model.ProductID))
                 {
                     <tr>
-                        <td style="vertical-align:middle">CPU</td>
-                        <td style="vertical-align:middle;">Intel Core i5 3337U 1.8GHz</td>
-                        <td style="vertical-align:middle;">1</td>
+                        <td style="vertical-align:middle">@attr.AttributeValue</td>
+                        <td style="vertical-align:middle;">@attr.AttributeName</td>
+                        <td style="vertical-align:middle;">@attr.DisplayOrder</td>
                         <td style="vertical-align:middle; text-align:right">
-                            <a class="btn btn-xs btn-primary" href="~/Product/Attribute/123?method=edit&attributeId=456">
+                            <a class="btn btn-xs btn-primary" href="~/Product/Attribute/@attr.ProductID?method=edit&attributeId=@attr.AttributeID">
                                 <i class="fa fa-edit"></i>
                             </a>
-                            <a class="btn btn-xs btn-danger" href="~/Product/Attribute/123?method=delete&attributeId=456" onclick="return confirm('Xóa thuộc tính này của mặt hàng?')">
+                            <a class="btn btn-xs btn-danger" href="~/Product/Attribute/@attr.ProductID?method=delete&attributeId=@attr.AttributeID" onclick="return confirm('Xóa thuộc tính này của mặt hàng?')">
                                 <i class="fa fa-remove"></i>
                             </a>
                         </td>
