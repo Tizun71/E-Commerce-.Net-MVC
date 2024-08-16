@@ -33,7 +33,7 @@ namespace SV21T1020323.Web.Models
     /// </summary>
     public class CustomerSearchResult: PaginationSearchResult
     {
-        public required List<Customer> Data { get; set; }
+        public List<Customer> Data { get; set; }
     }
 
     public class EmployeeSearchResult : PaginationSearchResult

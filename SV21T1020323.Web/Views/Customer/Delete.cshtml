@@ -8,38 +8,38 @@
         <form action="~/Customer/Delete/@Model.CustomerID" method="post">
 
             <div class="form-group">
-                <label>Tên khách hàng</label>
-                <p class="form-control-static">@Model.CustomerName</p>
+                <label class="control-label col-sm-2">Tên khách hàng: </label>
+                <p class="col-sm-10">@Model.CustomerName</p>
             </div>
 
             <div class="form-group">
-                <label>Tên giao dịch</label>
-                <p class="form-control-static">@Model.ContactName</p>
+                <label class="control-label col-sm-2">Tên giao dịch: </label>
+                <p class="col-sm-10">@Model.ContactName</p>
             </div>
 
             <div class="form-group">
-                <label>Điện thoại</label>
-                <p class="form-control-static">@Model.Phone</p>
+                <label class="control-label col-sm-2">Số điện thoại: </label>
+                <p class="col-sm-10">@Model.Phone</p>
             </div>
 
             <div class="form-group">
-                <label>Email</label>
-                <p class="form-control-static">@Model.Email</p>
+                <label class="control-label col-sm-2">Email: </label>
+                <p class="col-sm-10">@Model.Email</p>
             </div>
 
             <div class="form-group">
-                <label>Địa chỉ</label>
-                <p class="form-control-static">@Model.Address</p>
+                <label class="control-label col-sm-2">Địa chỉ: </label>
+                <p class="col-sm-10">@Model.Address</p>
             </div>
 
             <div class="form-group">
-                <label>Tỉnh thành</label>
-                <p class="form-control-static">@Model.Province</p>
+                <label class="control-label col-sm-2">Tỉnh/thành: </label>
+                <p class="col-sm-10">@Model.Province</p>
             </div>
 
             <div class="form-group">
-                <label>Trạng thái khách hàng</label>
-                <p class="form-control-static">@(Model.IsLocked ? "Khách hàng bị khóa" : "Khách hàng không bị khóa")  </p>
+                <label class="control-label col-sm-2">Trạng thái khách hàng: </label>
+                <p class="col-sm-10">@(Model.IsLocked ? "Khách hàng bị khóa" : "Khách hàng không bị khóa")</p>
             </div>
 
             <div class="form-group text-right">
