@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SV21T1020323.BusinessLayers;
 using SV21T1020323.DomainModels;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SV21T1020323.Web.Controllers
 {
+    [Authorize]
     public class CategoryController : Controller
     {
         const int PAGE_SIZE = 5;

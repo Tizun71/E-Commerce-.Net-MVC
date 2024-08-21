@@ -53,8 +53,9 @@
                 <div class="col-lg-offset-2 col-sm-10">
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" name="@nameof(Model.IsWorking)" value="@Model.IsWorking" "@(Model.IsWorking ? "checked" : "")" /> Nhân viên đang làm việc
+                            <input type="checkbox" name="@nameof(Model.IsWorking)" value="true" @(Model.IsWorking ? "checked" : "") /> Nhân viên đang làm việc
                         </label>
+                        <input type="hidden" name="@nameof(Model.IsWorking)" value="false" />
                     </div>
                 </div>
             </div>

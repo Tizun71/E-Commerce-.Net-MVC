@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SV21T1020323.BusinessLayers;
 using SV21T1020323.DomainModels;
 using SV21T1020323.Web.Models;
 
 namespace SV21T1020323.Web.Controllers
 {
+    [Authorize]
     public class CustomerController : Controller
     {
         private const int PAGE_SIZE = 20;

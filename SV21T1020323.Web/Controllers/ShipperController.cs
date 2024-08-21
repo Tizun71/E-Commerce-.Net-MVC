@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SV21T1020323.BusinessLayers;
 using SV21T1020323.DomainModels;
 
 namespace SV21T1020323.Web.Controllers
 {
+    [Authorize]
     public class ShipperController : Controller
     {
         const int PAGE_SIZE = 20;

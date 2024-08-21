@@ -1,10 +1,10 @@
 ﻿<header class="main-header">
     <!-- Logo -->
-    <a href="~/Home" class="logo">
+    <a href="~/" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>Tizun</b>LT</span>
+        <span class="logo-mini"><b>Tizun</b></span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>Tizun</b>Shop</span>
+        <span class="logo-lg"><b>Tizun</b> Shop</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -19,33 +19,40 @@
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
                 <!-- User Account: style can be found in dropdown.less -->
-                <li class="dropdown user user-menu">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="https://i.gifer.com/origin/04/0405c415905d770c67dce2909ab9bf5d.gif" class="user-image" alt="User Image">
-                        <span class="hidden-xs">Tien Dung</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <!-- User image -->
-                        <li class="user-header">
-                            <img src="https://i.gifer.com/origin/04/0405c415905d770c67dce2909ab9bf5d.gif" class="img-circle" alt="User Image">
+                @{
+                    var userData = User.GetUserData();
 
-                            <p>
-                               Tien Dung
-                            </p>
+                    if (userData != null)
+                    {
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="~assets/images/employees/@userData.Photo" class="user-image" alt="User Image">
+                                <span class="hidden-xs">@userData.DisplayName</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- User image -->
+                                <li class="user-header">
+                                    <img src="~/images/employees/@userData.Photo" class="img-circle" alt="User Image">
+                                    <p>
+                                        @userData.DisplayName
+                                    </p>
+                                </li>
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="#" class="btn btn-default btn-flat">Tài khoản</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="~/Account/Logout" class="btn btn-default btn-flat">Thoát</a>
+                                    </div>
+                                </li>
+                            </ul>
                         </li>
-                        <!-- Menu Footer-->
-                        <li class="user-footer">
-                            <div class="pull-left">
-                                <a href="~/Account/ChangePassword" class="btn btn-default btn-flat">Change Password</a>
-                            </div>
-                            <div class="pull-right">
-                                <a href="~/Account/Logout" class="btn btn-default btn-flat">Log out</a>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
+                    }
+                }
+                
                 <!-- Control Sidebar Toggle Button -->
-@*                 <li>
+                @* <li>
                     <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
                 </li> *@
             </ul>
