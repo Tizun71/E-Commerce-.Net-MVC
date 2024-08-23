@@ -35,9 +35,41 @@ namespace SV21T1020323.Web.Models
     {
         public List<Customer> Data { get; set; }
     }
-
+    /// <summary>
+    /// Kết quả tìm kiếm nhân viên
+    /// </summary>
     public class EmployeeSearchResult : PaginationSearchResult
     {
         public List<Employee> Data { get; set; }
+    }
+    /// <summary>
+    /// Kết quả tìm kiếm nhà cung cấp
+    /// </summary>
+    public class SupplierSearchResult : PaginationSearchResult
+    {
+        public List<Supplier> Data { get; set; }
+    }
+    /// <summary>
+    /// Kết quả tìm kiếm người giao hàng
+    /// </summary>
+    public class ShipperSearchResult : PaginationSearchResult
+    {
+        public List<Shipper> Data { get; set; }
+    }
+
+    public class ProductSearchResult : PaginationSearchResult
+    {
+        public int CategoryId { get; set; } = 0;
+        public int SupplierId { get; set; } = 0;
+        public decimal MinPrice { get; set; } = 0;
+        public decimal MaxPrice { get; set; } = 0;
+        public required List<Product> Data { get; set; }
+    }
+
+    public class OrderSearchResult : PaginationSearchResult
+    {
+        public int Status {  get; set; } = 0;
+        public string TimeRange { get; set; } = "";
+        public List<Order> Data { get; set; } = new List<Order>();
     }
 }
