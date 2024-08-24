@@ -120,6 +120,29 @@ namespace SV21T1020323.Web.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public IActionResult ChangeAddress(int id = 0)
+        {
+            ViewBag.OrderID = id;
+            return View();
+        }
+        public IActionResult ChangeAddress(int id = 0, string deliveryProvince = "", string deliveryAddress = "")
+        {
+            if (deliveryProvince == "" || deliveryAddress == "")
+            {
+                return Json("Vui lòng chọn địa chỉ");
+            }
+            var data = OrderDataService.GetOrder(id);
+            data.DeliveryProvince = deliveryProvince;
+            data.DeliveryAddress = deliveryAddress;
+
+            bool result = OrderDataService.UpdateAddress(data);
+            if (!result)
+                return Json("Đơn hàng không cho phép chuyển địa chỉ");
+            return Json("");
+        }
+
         /// <summary>
         /// Giao diện để chọn người giao hàng cho đơn hàng
         /// </summary>

@@ -208,5 +208,10 @@ namespace SV21T1020323.BusinessLayers
             }
             return false;
         }
+
+        public static bool UpdateAddress(Order data)
+        {
+            return orderDB.Update(data);  
+        }
     }
 }
