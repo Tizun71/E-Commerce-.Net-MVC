@@ -49,7 +49,9 @@
 
             <div class="form-group">
                 <div class="col-lg-offset-2 col-sm-10">
-                    <img id="Photo" src="~/assets/images/employees/@Model.Photo" class="img img-bordered" style="width:200px">
+                            <img class="profile-user-img img-responsive img-bordered"
+                                 alt="no-photo"
+                                 src="~/assets/images/products/@(string.IsNullOrWhiteSpace(Model.Photo) ? "nophoto.png" : Model.Photo)">
                 </div>
             </div>
 

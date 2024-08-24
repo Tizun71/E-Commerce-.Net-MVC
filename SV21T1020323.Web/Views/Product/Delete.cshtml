@@ -19,12 +19,12 @@
 
             <div class="form-group">
                 <label >Loại hàng:</label>
-                <p class="form-control-static">@CommonDataService.GetCategory(Model.CategoryID)</p>
+                <p class="form-control-static">@CommonDataService.GetCategory(Model.CategoryID).CategoryName</p>
             </div>
 
             <div class="form-group">
                 <label >Nhà cung cấp:</label>
-                <p class="form-control-static">@CommonDataService.GetSupplier(Model.SupplierID)</p>
+                <p class="form-control-static">@CommonDataService.GetSupplier(Model.SupplierID).SupplierName</p>
             </div>
 
             <div class="form-group">
@@ -39,12 +39,14 @@
 
             <div class="form-group">
                 <label >Trạng thái bán</label>
-                <p class="form-control-static">@Model.IsSelling ? "Hiện đang được bán" : "Hiện đang không được bán"</p>
+                <p class="form-control-static">@(Model.IsSelling ? "Hiện đang được bán" : "Hiện đang không được bán")</p>
             </div>
 
             <div class="form-group">
                 <label >Ảnh minh họa:</label>
-                <img class="profile-user-img img-responsive img-bordered" src="https://cdn1.concung.com/2022/06/47733-89620-large_mobile/xe-tap-di-nhua-hinh-tho-aubw03-xanh-duong.jpg">
+                <img class="profile-user-img img-responsive img-bordered"
+                     alt="no-photo"
+                     src="~/assets/images/products/@(string.IsNullOrWhiteSpace(Model.Photo) ? "nophoto.png" : Model.Photo)">
             </div>
 
 

@@ -16,7 +16,7 @@
                     <li style="display: @(Model.Order.Status == Constants.ORDER_INIT ? "block" : "none")">
                         <a href="~/Order/Accept/@Model.Order.OrderID" onclick="return confirm('Xác nhận duyệt chấp nhận đơn hàng này?')">Duyệt đơn hàng</a>
                     </li>
-                    <li style="display: @(Model.Order.Status == Constants.ORDER_INIT || Model.Order.Status == Constants.ORDER_ACCEPTED ? "block" : "none")">
+                    <li style="display: @(Model.Order.Status == Constants.ORDER_INIT ? "block" : "none")">
                         <a href="~/Order/ChangeAddress/@Model.Order.OrderID" class="btn-modal">Chuyển địa chỉ / tỉnh thành</a>
                     </li>
                     <li style="display: @(Model.Order.Status == Constants.ORDER_ACCEPTED || Model.Order.Status == Constants.ORDER_SHIPPING ? "block" : "none")">
@@ -26,10 +26,10 @@
                         <a href="~/Order/Finish/@Model.Order.OrderID" onclick="return confirm('Xác nhận đơn hàng đã hoàn tất thành công?')">Xác nhận hoàn tất đơn hàng</a>
                     </li>
                     <li class="divider"></li>
-                    <li style="display: @(Model.Order.Status != Constants.ORDER_FINISHED ? "block" : "none")">
+                    <li style="display: @(Model.Order.Status != Constants.ORDER_FINISHED && Model.Order.Status != Constants.ORDER_CANCEL ? "block" : "none")">
                         <a href="~/Order/Cancel/@Model.Order.OrderID" onclick="return confirm('Xác nhận hủy đơn hàng này?')">Hủy đơn hàng</a>
                     </li>
-                    <li style="display: @(Model.Order.Status == Constants.ORDER_INIT || Model.Order.Status == Constants.ORDER_ACCEPTED ? "block" : "none")">
+                    <li style="display: @(Model.Order.Status == Constants.ORDER_INIT ? "block" : "none")">
                         <a href="~/Order/Reject/@Model.Order.OrderID" onclick="return confirm('Xác nhận từ chối đơn hàng này?')">Từ chối đơn hàng</a>
                     </li>
                 </ul>
@@ -142,7 +142,7 @@
                             <td class="text-center">@item.Quantity</td>
                             <td class="text-right">@item.SalePrice.ToString("N0")</td>
                             <td class="text-right">@item.TotalPrice.ToString("N0")</td>
-                            <td class="text-right" style="display: @(Model.Order.Status == Constants.ORDER_INIT || Model.Order.Status == Constants.ORDER_ACCEPTED ? "block" : "none")">
+                            <td class="text-right" style="display: @(Model.Order.Status == Constants.ORDER_INIT ? "block" : "none")">
                                 <a href="~/Order/EditDetail/@item.OrderID?productId=@item.ProductID" class="btn btn-xs btn-primary btn-modal">
                                     <i class="fa fa-edit"></i>
                                 </a>

@@ -75,7 +75,7 @@ namespace SV21T1020323.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Save(Product? data)
+        public IActionResult Save(Product? data, IFormFile? uploadPhoto)
         {
             ViewBag.Title = data.ProductID == 0 ? "Bổ sung sản phẩm" : "Cập nhật thông tin sản phẩm";
 
@@ -103,6 +103,20 @@ namespace SV21T1020323.Web.Controllers
             data.ProductDescription = data.ProductDescription ?? "";
             data.Photo = data.Photo;
             data.IsSelling = data.IsSelling;
+
+            //Xử lý với ảnh upload (nếu có ảnh upload thì lưu ảnh và gán lại tên file ảnh mới cho employee)
+            if (uploadPhoto != null)
+            {
+                string fileName = $"{DateTime.Now.Ticks}_{uploadPhoto.FileName}"; //Tên file sẽ lưu
+                string folder = Path.Combine(ApplicationContext.WebRootPath, @"assets\images\products"); //đường dẫn đến thư mục lưu file
+                string filePath = Path.Combine(folder, fileName); //Đường dẫn đến file cần lưu D:\images\employees\photo.png
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    uploadPhoto.CopyTo(stream);
+                }
+                data.Photo = fileName;
+            }
 
             if (!ModelState.IsValid)
             {
@@ -166,8 +180,26 @@ namespace SV21T1020323.Web.Controllers
             }
         }
 
-        public IActionResult PhotoSave(ProductPhoto? data)
+        public IActionResult PhotoSave(ProductPhoto? data, IFormFile? uploadPhoto)
         {
+            if (uploadPhoto != null)
+            {
+                string fileName = $"{DateTime.Now.Ticks}_{uploadPhoto.FileName}"; //Tên file sẽ lưu
+                string folder = Path.Combine(ApplicationContext.WebRootPath, @"assets\images\products\photos"); //đường dẫn đến thư mục lưu file
+                string filePath = Path.Combine(folder, fileName); //Đường dẫn đến file cần lưu D:\images\employees\photo.png
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    uploadPhoto.CopyTo(stream);
+                }
+                data.Photo = fileName;
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View("Edit", data);
+            }
+
             if (data.PhotoID == 0)
             {
                 ProductDataService.AddPhoto(data);
@@ -181,7 +213,6 @@ namespace SV21T1020323.Web.Controllers
 
         public IActionResult Attribute(int id = 0, string method = "", int attributeId = 0)
         {
-            var data = ProductDataService.ListAttributes(id);
             switch (method)
             {
                 case "add":
@@ -197,7 +228,7 @@ namespace SV21T1020323.Web.Controllers
                     ProductAttribute? attr2 = ProductDataService.GetAttribute(attributeId);
                     if (attr2 == null)
                         return RedirectToAction("Edit");
-                    return View(data);
+                    return View(attr2);
                 case "delete":
                     //Xóa ảnh trực tiếp, Không cần confirm
                     ProductDataService.DeleteAttribute(attributeId);
