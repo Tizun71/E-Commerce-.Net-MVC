@@ -2,6 +2,7 @@
 using SV21T1020323.DomainModels;
 using SV21T1020323.DataLayers.SQLServer;
 using SV21T1020323.DataLayers;
+using System.Data;
 
 namespace SV21T1020323.DataLayers.SQLServer
 {
@@ -48,6 +49,25 @@ namespace SV21T1020323.DataLayers.SQLServer
             }
             return result;
         }
-    }
 
+        public bool IsOldPassword(string userName, string oldPassword)
+        {
+            bool result = false;
+            using (var connection = OpenConnection())
+            {
+                var sql = @"IF EXISTS(SELECT * FROM Employees WHERE Email = @Email AND Password = @OldPassword)
+                                SELECT 1
+                            ELSE
+                                SELECT 0";
+                var parameters = new
+                {
+                    Email = userName,
+                    OldPassword = oldPassword,
+                };
+                result = connection.ExecuteScalar<bool>(sql: sql, param: parameters, commandType: CommandType.Text);
+                connection.Close();
+            }
+            return result;
+        }
+    }
 }

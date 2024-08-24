@@ -1,11 +1,6 @@
 ﻿using Dapper;
 using SV21T1020323.DomainModels;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SV21T1020323.DataLayers.SQLServer
 {
@@ -163,6 +158,25 @@ namespace SV21T1020323.DataLayers.SQLServer
                     IsWorking = data.IsWorking
                 };
                 result = connection.Execute(sql: sql, param: parameters, commandType: CommandType.Text) > 0;
+                connection.Close();
+            }
+            return result;
+        }
+
+        public bool IsEmailValid(Employee data)
+        {
+            bool result = false;
+            using (var connection = OpenConnection())
+            {
+                var sql = @"IF EXISTS(SELECT * FROM Employees WHERE Email = @Email)
+                                SELECT 1
+                            ELSE
+                                SELECT 0";
+                var parameters = new
+                {
+                    Email = data.Email ?? "",
+                };
+                result = connection.ExecuteScalar<bool>(sql: sql, param: parameters, commandType: CommandType.Text);
                 connection.Close();
             }
             return result;

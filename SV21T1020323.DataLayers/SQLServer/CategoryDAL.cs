@@ -103,6 +103,11 @@ namespace SV21T1020323.DataLayers.SQLServer
             return result;
         }
 
+        public bool IsEmailValid(Category data)
+        {
+            throw new NotImplementedException();
+        }
+
         public IList<Category> List(int page = 1, int pageSize = 0, string searchValue = "")
         {
             List<Category> data = new List<Category>();

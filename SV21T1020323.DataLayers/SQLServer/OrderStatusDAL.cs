@@ -1,22 +1,21 @@
-﻿using SV21T1020323.DomainModels;
+﻿using Dapper;
+using SV21T1020323.DomainModels;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Dapper;
-using Microsoft.Data.SqlClient;
-using System.Data;
 
 namespace SV21T1020323.DataLayers.SQLServer
 {
-    public class ProvinceDAL : _BaseDAL, ICommonDAL<Province>
+    public class OrderStatusDAL : _BaseDAL, ICommonDAL<OrderStatus>
     {
-        public ProvinceDAL(string connectionString) : base(connectionString)
+        public OrderStatusDAL(string connectionString) : base(connectionString)
         {
         }
 
-        public int Add(Province data)
+        public int Add(OrderStatus data)
         {
             throw new NotImplementedException();
         }
@@ -31,7 +30,7 @@ namespace SV21T1020323.DataLayers.SQLServer
             throw new NotImplementedException();
         }
 
-        public Province? Get(int id)
+        public OrderStatus? Get(int id)
         {
             throw new NotImplementedException();
         }
@@ -41,24 +40,24 @@ namespace SV21T1020323.DataLayers.SQLServer
             throw new NotImplementedException();
         }
 
-        public bool IsEmailValid(Province data)
+        public bool IsEmailValid(OrderStatus data)
         {
             throw new NotImplementedException();
         }
 
-        public IList<Province> List(int page = 1, int pageSize = 0, string searchValue = "")
+        public IList<OrderStatus> List(int page = 1, int pageSize = 0, string searchValue = "")
         {
-            List<Province> data = new List<Province>();
+            List<OrderStatus> data = new List<OrderStatus>();
             using (var connection = OpenConnection())
             {
-                var sql = @"SELECT * FROM Provinces";
-                data = connection.Query<Province>(sql: sql ,commandType : CommandType.Text ).ToList();
+                var sql = @"SELECT * FROM OrderStatus";
+                data = connection.Query<OrderStatus>(sql: sql, commandType: CommandType.Text).ToList();
                 connection.Close();
             }
             return data;
         }
 
-        public bool Update(Province data)
+        public bool Update(OrderStatus data)
         {
             throw new NotImplementedException();
         }
