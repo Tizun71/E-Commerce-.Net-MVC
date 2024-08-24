@@ -1,5 +1,5 @@
 ﻿
-@model SV21T1020323.Web.Models.ProductSearchResult
+@model ProductSearchInput
 
 @{
     //Layout = null
@@ -9,8 +9,10 @@
 <div class ="box box-primary">
     <div class="box-body">
         <!--Form để nhập đầu vào tìm kiếm-->
-        <form id="formSearch" action="/Product" method="get">
+        <form id="formSearch" action="~/Product/Search" method="get" data-container="#searchResult">
             <div class="row">
+                <input type="hidden" name="@nameof(Model.PageSize)" value="@Model.PageSize" />
+
                 <div class="col-sm-3">
                     <label>Loại hàng:</label>
                     <select class="form-control" name="@nameof(Model.CategoryId)">
@@ -72,62 +74,43 @@
         </form>
 
         <!--Hiển thị dữ liệu-->
-        <p style="margin-top:10px">
-            có <strong>@Model.RowCount</strong> sản phẩm trong tổng số <strong>@Model.PageCount</strong> trang
-        </p>
-        <div class="table-responsive">
-            <table class="table table-bodered table-hover table-striped">
-                <thead>
-                    <tr class="bg-primary">
-                        <th style="width:80px">Ảnh</th>
-                        <th>Tên mặt hàng</th>
-                        <th>Đơn vị tính</th>
-                        <th>Giá</th>
-                        <th style="width:80px"></th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    @foreach (var item in Model.Data)
-                    {
-                        <tr>
-                            <td>
-                                <img class="profile-user-img img-responsive img-bordered" src="@(string.IsNullOrEmpty(item.Photo) ? Url.Content("~/assets/img/product.png") : item.Photo)">
-                            </td>
-                            <td>@item.ProductName</td>
-                            <td>@item.Unit</td>
-                            <td>@item.Price</td>
-                            <td class="text-right">
-                                <a href="~/Product/Edit/@item.ProductID" class="btn btn-xs btn-info">
-                                    <i class="fa fa-edit"></i>
-                                </a>
-                                <a href="~/Product/Delete/@item.ProductID" class="btn btn-xs btn-danger">
-                                    <i class="fa fa-remove"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    }
-
-                </tbody>
-            </table>
-        </div>
-
-        <div class="text-center">
-            <ul class="pagination">
-                @for (int p = 1; p <= Model.PageCount; p++)
-                {
-                    if (p == Model.Page)
-                    {
-                        <li class="active"><a href="#">@p</a></li>
-                    }
-                    else
-                    {
-                        <li><a href="~/Product?page=@p&searchValue=@Model.SearchValue&categoryId=@Model.CategoryId&supplierId=@Model.SupplierId&minPrice=@Model.MinPrice&maxPrice=@Model.MaxPrice">@p</a></li>
-                    }
-                }
-            </ul>
+        <div id="searchResult">
         </div>
     </div>
 </div>
 
-<script src="./js/DebounceInput.js" />
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $("#formSearch").submit(function (e) {
+                e.preventDefault();
+                paginationSearch(this, 1);
+                return;
+            });
+            paginationSearch("#formSearch", @Model.Page);
+        });
+
+        function paginationSearch(formSearch, page) {
+            var action = $(formSearch).prop("action");
+            var method = $(formSearch).prop("method");
+            var container = $(formSearch).data("container");
+
+            var searchData = $(formSearch).serializeArray();
+            searchData.push({ "name": "Page", "value": page });
+
+            $.ajax({
+                url: action,
+                type: method,
+                data: searchData,
+                async: false,
+                error: function () {
+                    alert("Your request is not valid!");
+                },
+                success: function (data) {
+                    $(container).html(data);
+                }
+            });
+        }
+    </script>
+}
+

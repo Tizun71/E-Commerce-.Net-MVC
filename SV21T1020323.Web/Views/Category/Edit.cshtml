@@ -10,6 +10,8 @@
             <div class="form-group">
                 <label>Tên Loại hàng</label>
                 <input type="text" class="form-control" name="@nameof(Model.CategoryName)" value="@Model.CategoryName" autofocus>
+                @Html.ValidationMessage(nameof(Model.CategoryName))
+
             </div>
 
             <div class="form-group">

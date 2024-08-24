@@ -56,6 +56,14 @@ namespace SV21T1020323.Web.Models
     {
         public List<Shipper> Data { get; set; }
     }
+    /// <summary>
+    /// Kết quả tìm kiếm loại hành
+    /// </summary>
+    public class CategorySearchResult : PaginationSearchResult
+    {
+        public List<Category> Data { get; set; }
+
+    }
 
     public class ProductSearchResult : PaginationSearchResult
     {

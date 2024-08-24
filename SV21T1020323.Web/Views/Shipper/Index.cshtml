@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SV21T1020323.DomainModels.Shipper>
+﻿@model PaginationSearchInput
 @{
     //Layout = null
     ViewBag.Title = "Quản lý người giao hàng";
@@ -7,13 +7,15 @@
 <div class ="box box-primary">
     <div class="box-body">
         <!--Search Form-->
-        <form id="formSearch" action="~/Shipper" method="get">
+        <form id="formSearch" action="~/Shipper/Search" method="get" data-container="#searchResult">
             <div class="input-group">
+                <input type="hidden" name="@nameof(Model.PageSize)" value="@Model.PageSize" />
 
                 <input name="searchValue"
                        type="text"
                        class="form-control"
                        placeholder="Nhập tên hãng giao hàng cần tìm"
+                       value="@Model.SearchValue"
                        autofocus />
 
                 <div class="input-group-btn">
@@ -29,55 +31,43 @@
         </form>
 
         <!--Hiển thị dữ liệu-->
-        <p style="margin-top:10px">
-            có <strong>@ViewBag.RowCount</strong> hãng giao hàng trong tổng số <strong>@ViewBag.PageCount</strong> trang
-        </p>
-        <div class="table-responsive">
-            <table class="table table-bodered table-hover table-striped">
-                <thead>
-                    <tr class="bg-primary">
-                        <th>Tên hãng giao hàng</th>
-                        <th>Số điện thoại</th>
-                        <th style="width:80px"></th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>@item.ShipperName</td>
-                            <td>@item.Phone</td>
-                            <td class="text-right">
-                                <a href="~/Shipper/Edit/@item.ShipperID" class="btn btn-xs btn-info">
-                                    <i class="fa fa-edit"></i>
-                                </a>
-                                <a href="~/Shipper/Delete/@item.ShipperID" class="btn btn-xs btn-danger">
-                                    <i class="fa fa-remove"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    }
-
-                </tbody>
-            </table>
-        </div>
-
-        <div class="text-center">
-            <ul class="pagination">
-                @for (int p = 1; p <= ViewBag.PageCount; p++)
-                {
-                    if (p == ViewBag.Page)
-                    {
-                        <li class="active"><a href="#">@p</a></li>
-                    }
-                    else
-                    {
-                        <li><a href="~/Shipper?page=@p&searchValue=@ViewBag.SearchValue">@p</a></li>
-                    }
-                }
-            </ul>
+        <div id="searchResult">
         </div>
 
     </div>
 </div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $("#formSearch").submit(function (e) {
+                e.preventDefault();
+                paginationSearch(this, 1);
+                return;
+            });
+            paginationSearch("#formSearch", @Model.Page);
+        });
+
+        function paginationSearch(formSearch, page) {
+            var action = $(formSearch).prop("action");
+            var method = $(formSearch).prop("method");
+            var container = $(formSearch).data("container");
+
+            var searchData = $(formSearch).serializeArray();
+            searchData.push({ "name": "Page", "value": page });
+
+            $.ajax({
+                url: action,
+                type: method,
+                data: searchData,
+                async: false,
+                error: function () {
+                    alert("Your request is not valid!");
+                },
+                success: function (data) {
+                    $(container).html(data);
+                }
+            });
+        }
+    </script>
+}

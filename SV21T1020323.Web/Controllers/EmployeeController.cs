@@ -9,6 +9,7 @@ using System.Reflection;
 namespace SV21T1020323.Web.Controllers
 {
     [Authorize(Roles ="admin")]
+
     public class EmployeeController : Controller
     {
         private const int PAGE_SIZE = 9;
@@ -85,6 +86,12 @@ namespace SV21T1020323.Web.Controllers
                 data.Address = "";
             if (string.IsNullOrWhiteSpace(data.Phone))
                 data.Phone = "";
+
+            //Kiểm tra nếu email bị trùng
+            if (data.EmployeeID == 0 && CommonDataService.IsEmailEmployeeDuplicate(data))
+            {
+                ModelState.AddModelError(nameof(data.Email), "Email đã được sử dụng trong hệ thống");
+            }
 
             //Xử lý ngày sinh
             DateTime? birthDate = birthDateInput.ToDateTime();

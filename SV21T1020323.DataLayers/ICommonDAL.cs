@@ -62,5 +62,12 @@ namespace SV21T1020323.DataLayers
         /// <param name="id"></param>
         /// <returns></returns>
         bool InUsed(int id);
+
+        /// <summary>
+        /// Kiểm tra xem dữ liệu thêm vào có hợp lệ không
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        bool IsEmailValid(T data);
     }
 }

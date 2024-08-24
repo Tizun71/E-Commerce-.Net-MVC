@@ -1,4 +1,6 @@
-﻿namespace SV21T1020323.Web.Models
+﻿using SV21T1020323.DomainModels;
+
+namespace SV21T1020323.Web.Models
 {
     /// <summary>
     /// Đầu vào tìm kiếm dữ liệu để nhận dữ liệu dưới dạng phân trang
@@ -63,5 +65,9 @@
 
     public class ProductSearchInput: PaginationSearchInput
     {
+        public int CategoryId { get; set; } = 0;
+        public int SupplierId { get; set; } = 0;
+        public decimal MinPrice { get; set; } = 0;
+        public decimal MaxPrice { get; set; } = 0;
     }
 }

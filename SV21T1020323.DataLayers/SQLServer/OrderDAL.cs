@@ -248,7 +248,7 @@ namespace SV21T1020323.DataLayers.SQLServer
                     Quantity = quantity,
                     SalePrice = salePrice,
                 };
-                result = connection.ExecuteScalar<bool>(sql: sql, param: parameters, commandType: CommandType.Text);
+                result = connection.Execute(sql: sql, param: parameters, commandType: CommandType.Text) > 0;
                 connection.Close();
             }
             return result;

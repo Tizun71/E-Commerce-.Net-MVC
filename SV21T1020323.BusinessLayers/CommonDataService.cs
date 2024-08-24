@@ -16,6 +16,7 @@ namespace SV21T1020323.BusinessLayers
         static readonly ICommonDAL<Supplier> supplierDB;
         static readonly ICommonDAL<Shipper> shipperDB;
         static readonly ICommonDAL<Employee> employeeDB;
+        static readonly ICommonDAL<OrderStatus> orderStatusDB;
 
         static CommonDataService()
         {
@@ -27,7 +28,14 @@ namespace SV21T1020323.BusinessLayers
             supplierDB = new DataLayers.SQLServer.SupplierDAL(connectionString);
             shipperDB = new DataLayers.SQLServer.ShipperDAL(connectionString);
             employeeDB = new DataLayers.SQLServer.EmployeeDAL(connectionString);
+            orderStatusDB = new DataLayers.SQLServer.OrderStatusDAL(connectionString);
         }
+
+        public static List<OrderStatus> ListOfOrderStatuses()
+        {
+            return orderStatusDB.List().ToList();
+        }
+
 
         //Province
         /// <summary>
@@ -428,6 +436,16 @@ namespace SV21T1020323.BusinessLayers
         public static bool IsUsedEmployee(int id)
         {
             return employeeDB.InUsed(id);
+        }
+
+        /// <summary>
+        /// Kiểm tra xem email đã xuất hiện trong danh sách nhân viên chưa?
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static bool IsEmailEmployeeDuplicate(Employee data)
+        {
+            return employeeDB.IsEmailValid(data);
         }
     }
 }

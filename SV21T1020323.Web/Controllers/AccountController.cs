@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SV21T1020323.BusinessLayers;
 using SV21T1020323.Web;
+using SV21T1020323.Web.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SV21T1020323.Web.Controllers
 {
@@ -62,6 +64,37 @@ namespace SV21T1020323.Web.Controllers
             HttpContext.Session.Clear();
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login");
+        }
+
+        [HttpGet]
+        public IActionResult AccessDenined()
+        {
+            return View();
+        }
+        public IActionResult ChangePassword(ChangePasswordViewModel data)
+        {
+            return View(data);
+        }
+
+        public IActionResult Save(string userName, ChangePasswordViewModel data)
+        {
+            //Kiểm tra dữ liệu đầu vào
+            if (string.IsNullOrWhiteSpace(data.oldPassword))
+                ModelState.AddModelError(nameof(data.oldPassword), "Mật khẩu không được để trống");
+            if (string.IsNullOrWhiteSpace(data.oldPassword))
+                ModelState.AddModelError(nameof(data.newPassword), "Mật khẩu mới không được để trống");
+            if (data.newPassword != data.confirmNewPassword)
+                ModelState.AddModelError(nameof(data.confirmNewPassword), "Mật khẩu xác nhận không khớp");
+            if (data.newPassword == data.oldPassword)
+                ModelState.AddModelError(nameof(data.newPassword), "Mật khẩu mới không được trùng với mật khẩu hiện tại");
+            if (!UserAccountService.IsOldPassword(userName, data.oldPassword))
+                ModelState.AddModelError(nameof(data.oldPassword), "Mật khẩu không đúng");
+
+            if (!ModelState.IsValid)
+                return View("ChangePassword", data);
+
+            UserAccountService.ChangePassword(userName, data.oldPassword, data.newPassword);
+            return RedirectToAction("Index", "Home");
         }
     }
 }

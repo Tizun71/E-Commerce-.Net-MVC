@@ -24,5 +24,13 @@ namespace SV21T1020323.DataLayers
         /// <param name="newPassword"></param>
         /// <returns></returns>
         bool ChangePassword(string userName, string oldPassword, string newPassword);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="oldPassword"></param>
+        /// <returns></returns>
+        public bool IsOldPassword(string userName, string oldPassword);
     }
 }

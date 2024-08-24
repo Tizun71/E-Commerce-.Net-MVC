@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SV21T1020323.BusinessLayers;
 using SV21T1020323.DomainModels;
+using SV21T1020323.Web.Models;
 using System.Buffers;
 
 namespace SV21T1020323.Web.Controllers
@@ -10,24 +11,44 @@ namespace SV21T1020323.Web.Controllers
     public class ProductController : Controller
     {
         const int PAGE_SIZE = 20;
+        private const string SEARCH_CONDITION = "customer_search";
+
         public IActionResult Index(int page = 1, string searchValue = "", int categoryId = 0, int supplierId = 0, decimal minPrice = 0, decimal maxPrice = 0)
         {
-            int rowCount = 0;
-            var data = ProductDataService.ListProducts(out rowCount, page, PAGE_SIZE, searchValue ?? "", categoryId, supplierId, minPrice, maxPrice);
+            ProductSearchInput? input = ApplicationContext.GetSessionData<ProductSearchInput>(SEARCH_CONDITION);
+            if (input == null)
+            {
+                input = new ProductSearchInput()
+                {
+                    Page = 1,
+                    PageSize = PAGE_SIZE,
+                    SearchValue = "",
+                    CategoryId = categoryId,
+                    SupplierId = supplierId,
+                    MinPrice = minPrice,
+                    MaxPrice = maxPrice
+                };
+            }
+            return View(input);
+        }
 
-            Models.ProductSearchResult model = new Models.ProductSearchResult()
-            { 
-                Page = page,
-                PageSize = PAGE_SIZE,
+        public IActionResult Search(ProductSearchInput input)
+        {
+            int rowCount = 0;
+            var data = ProductDataService.ListProducts(out rowCount, input.Page, input.PageSize, input.SearchValue ?? "", input.CategoryId, input.SupplierId, input.MinPrice, input.MaxPrice);
+            var model = new ProductSearchResult()
+            {
+                Page = input.Page,
+                PageSize = input.PageSize,
+                SearchValue = input.SearchValue ?? "",
                 RowCount = rowCount,
-                SearchValue = searchValue ?? "",
-                CategoryId = categoryId,
-                SupplierId = supplierId,
-                MinPrice = minPrice,
-                MaxPrice = maxPrice,
+                CategoryId = input.CategoryId,
+                SupplierId = input.SupplierId,
+                MinPrice = input.MinPrice,
+                MaxPrice = input.MaxPrice,
                 Data = data
             };
-
+            ApplicationContext.SetSessionData(SEARCH_CONDITION, input);
             return View(model);
         }
 
