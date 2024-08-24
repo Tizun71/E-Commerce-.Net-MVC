@@ -68,6 +68,18 @@ namespace SV21T1020323.Web.Controllers
         public IActionResult Save(Shipper? data)
         {
             //TODO: Kiểm tra dữ liệu đầu vào có hợp lệ hay không
+            ViewBag.Title = data.ShipperID == 0 ? "Bổ sung hãng giao hàng" : "Cập nhật thông tin hãng giao hàng";
+
+            if (string.IsNullOrWhiteSpace(data.ShipperName))
+            {
+                ModelState.AddModelError(nameof(data.ShipperName), "Tên hãng giao hàng không được để trống");
+            }
+            data.Phone = data.Phone ?? "";
+
+            if (!ModelState.IsValid)
+            {
+                return View("Edit", data);
+            }
             if (data.ShipperID == 0)
             {
                 CommonDataService.AddShipper(data);

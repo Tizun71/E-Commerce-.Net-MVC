@@ -66,9 +66,9 @@ namespace SV21T1020323.Web.Controllers
 
             return View(supplier);
         }
-        [HttpPost]
 
-        public IActionResult Save(Supplier? data)
+        [HttpPost]
+        public IActionResult Save(Supplier? data, IFormFile? uploadPhoto)
         {
             ViewBag.Title = data.SupplierID == 0 ? "Bổ sung nhà cung cấp" : "Cập nhật thông tin nhà cung cấp";
 
@@ -88,6 +88,20 @@ namespace SV21T1020323.Web.Controllers
             data.Phone = data.Phone ?? "";
             data.Email = data.Email ?? "";
             data.Address = data.Address ?? "";
+            data.Photo = data.Photo;
+
+            if (uploadPhoto != null)
+            {
+                string fileName = $"{DateTime.Now.Ticks}_{uploadPhoto.FileName}"; 
+                string folder = Path.Combine(ApplicationContext.WebRootPath, @"assets\images\suppliers"); 
+                string filePath = Path.Combine(folder, fileName); 
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    uploadPhoto.CopyTo(stream);
+                }
+                data.Photo = fileName;
+            }
 
             if (!ModelState.IsValid)
             {

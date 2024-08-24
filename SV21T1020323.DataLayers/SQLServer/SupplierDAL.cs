@@ -15,8 +15,8 @@ namespace SV21T1020323.DataLayers.SQLServer
             int id = 0;
             using (var connection = OpenConnection())
             {
-                var sql = @"INSERT INTO Suppliers(SupplierName, ContactName, Province, Address, Phone, Email)
-                            VALUES(@SupplierName, @ContactName, @Province, @Address, @Phone, @Email);
+                var sql = @"INSERT INTO Suppliers(SupplierName, ContactName, Province, Address, Phone, Email, Photo)
+                            VALUES(@SupplierName, @ContactName, @Province, @Address, @Phone, @Email, @Photo);
                             SELECT @@IDENTITY
                            ";
                 var parameters = new
@@ -27,6 +27,7 @@ namespace SV21T1020323.DataLayers.SQLServer
                     Address = data.Address ?? "",
                     Phone = data.Phone ?? "",
                     Email = data.Email ?? "",
+                    Photo = data.Photo ?? "",
                 };
                 id = connection.ExecuteScalar<int>(sql: sql, param: parameters, commandType: CommandType.Text);
                 connection.Close();
@@ -147,6 +148,7 @@ namespace SV21T1020323.DataLayers.SQLServer
                                 Province = @Province,
                                 Address = @Address,
                                 Phone = @Phone,
+                                Photo = @Photo,
                                 Email = @Email
                             WHERE SupplierId = @SupplierId
                             ";
@@ -158,7 +160,8 @@ namespace SV21T1020323.DataLayers.SQLServer
                     Province = data.Province ?? "",
                     Address = data.Address ?? "",
                     Phone = data.Phone ?? "",
-                    Email = data.Email ?? ""
+                    Email = data.Email ?? "",
+                    Photo = data.Photo ?? "",
                 };
                 result = connection.Execute(sql: sql, param: parameters, commandType: CommandType.Text) > 0;
                 connection.Close();

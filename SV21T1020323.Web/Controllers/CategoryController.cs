@@ -74,7 +74,7 @@ namespace SV21T1020323.Web.Controllers
 
             if (string.IsNullOrWhiteSpace(data.CategoryName))
             {
-                ModelState.AddModelError(nameof(data.CategoryName), "Tên nhà cung cấp không được để trống");
+                ModelState.AddModelError(nameof(data.CategoryName), "Tên loại hàng không được để trống");
             }
             data.Description = data.Description ?? "";
 
