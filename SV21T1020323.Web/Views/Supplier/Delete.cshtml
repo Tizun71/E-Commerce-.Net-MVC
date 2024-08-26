@@ -36,6 +36,13 @@
                 <p class="form-control-static">@Model.Email</p>
             </div>
 
+            <div class="form-group">
+                <label>Ảnh minh họa:</label>
+                <img class="profile-user-img img-responsive img-bordered"
+                     alt="no-photo"
+                     src="~/assets/images/suppliers/@(string.IsNullOrWhiteSpace(Model.Photo) ? "nophoto.png" : Model.Photo)">
+            </div>
+
             <div class="form-group text-right">
                 @if (ViewBag.AllowDelete)
                 {
